@@ -1,27 +1,23 @@
+data "aws_iam_policy_document" "ci-writer-assume-role-policy" {
+  statement = {
+    actions = ["sts:AssumeRole"]
+    effect = "Allow" 
+    principals = {
+      type        = "AWS"
+      identifiers = "${var.ci-users}"
+    }
+  }
+}
+
 resource "aws_iam_role" "ci-writer" {
   description = "role for ci to have write & read access to s3"
   name = "${var.role-ci-writer}"
   force_detach_policies = true
-  assume_role_policy = <<EOF
-{
-  "Version": "2012-10-17",
-  "Statement": [
-    {
-      "Effect": "Allow",
-      "Principal": {
-        "AWS": "${var.ci-accounts}" 
-      },
-      "Action": "sts:AssumeRole",
-      "Condition": {}
-    }
-  ]
-}
-EOF
+  assume_role_policy = "${data.aws_iam_policy_document.ci-writer-assume-role-policy.json}"
 }
 
-resource "aws_iam_policy" "ci-write-policy" {
+resource "aws_iam_policy" "ci-writer-policy" {
   name = "${var.policy-ci-s3-writer}"
-  user = "${aws_iam_user.developer.name}"
 
   policy = <<EOF
 {
@@ -48,5 +44,5 @@ EOF
 
 resource "aws_iam_role_policy_attachment" "ci-write-attachment" {
     role       = "${aws_iam_role.ci-writer.name}"
-    policy_arn = "${aws_iam_policy.ci-write-policy.arn}"
+    policy_arn = "${aws_iam_policy.ci-writer-policy.arn}"
 }
