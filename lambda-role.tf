@@ -1,6 +1,6 @@
-resource "aws_iam_role" "lambda-role" {
+resource "aws_iam_role" "lambda_role" {
   description = "role for lambda function to ratoate access & secret keys"
-  name = "${var.lambda-role-name}"
+  name = "${var.lambda_role_name}"
   force_detach_policies = true
   assume_role_policy = <<EOF
 {
@@ -19,8 +19,8 @@ EOF
 }
 
 # Policy 
-resource "aws_iam_policy" "store-credentials-policy" {
-    name        = "${var.policy-store-credentials-name}"
+resource "aws_iam_policy" "store_credentials_policy" {
+    name        = "${var.policy_store_credentials_name}"
     description = "For storing the acces & secret keys to parameter store"
     policy = <<EOF
 {
@@ -34,20 +34,20 @@ resource "aws_iam_policy" "store-credentials-policy" {
                 "ssm:DescribeParameters",
                 "ssm:GetParameter"
             ],
-            "Resource": "${var.resource-ssm-credentials}"
+            "Resource": "${var.resource_ssm_credentials}"
         }
     ]
 }
 EOF
 }
-resource "aws_iam_role_policy_attachment" "role-lambda-attachment1" {
-    role       = "${aws_iam_role.lambda-role.name}"
-    policy_arn = "${aws_iam_policy.store-credentials-policy.arn}"
+resource "aws_iam_role_policy_attachment" "role_lambda_attachment1" {
+    role       = "${aws_iam_role.lambda_role.name}"
+    policy_arn = "${aws_iam_policy.store_credentials_policy.arn}"
 }
 
 # Policy 
-resource "aws_iam_policy" "rotate-keys-policy" {
-    name        = "${var.policy-rotate-keys-name}"
+resource "aws_iam_policy" "rotate_keys_policy" {
+    name        = "${var.policy_rotate_keys_name}"
     description = "For rotating the acces & secret keys to specific iam_user"
     policy = <<EOF
 {
@@ -69,7 +69,7 @@ resource "aws_iam_policy" "rotate-keys-policy" {
 }
 EOF
 }
-resource "aws_iam_role_policy_attachment" "role-lambda-attachment2" {
-    role       = "${aws_iam_role.lambda-role.name}"
-    policy_arn = "${aws_iam_policy.rotate-keys-policy.arn}"
+resource "aws_iam_role_policy_attachment" "role_lambda_attachment2" {
+    role       = "${aws_iam_role.lambda_role.name}"
+    policy_arn = "${aws_iam_policy.rotate_keys_policy.arn}"
 }
