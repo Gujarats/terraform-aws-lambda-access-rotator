@@ -1,0 +1,5 @@
+examples/provider.tf
+.terraform
+out
+terraform.tfstate
+terraform.tfstate.backup
