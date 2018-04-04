@@ -71,7 +71,7 @@ variable "policy-ci-s3-writer" {
     description = "policy name for ci to read & write S3"
     type = "string"
 }
-variable "ci-accounts" {
+variable "ci-users" {
     description = "list of accounts to assume role-ci-writer"
     type = "list"
 }
