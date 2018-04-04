@@ -67,11 +67,11 @@ variable "role-ci-writer" {
     description = "role name for CI"
     type = "string"
 }
-variable "ci-accounts" {
-    description = "list of accounts to assume role-ci-writer"
+variable "policy-ci-s3-writer" {
+    description = "policy name for ci to read & write S3"
     type = "string"
 }
 variable "ci-accounts" {
     description = "list of accounts to assume role-ci-writer"
-    type = "string"
+    type = "list"
 }
