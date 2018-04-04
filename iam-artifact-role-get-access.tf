@@ -1,4 +1,4 @@
-data "aws_iam_policy_document" "developers-get-credentials-assume-role-policy" {
+data "aws_iam_policy_document" "developers_get_credentials_assume_role_policy" {
   statement = {
     actions = ["sts:AssumeRole"]
     effect = "Allow" 
@@ -9,15 +9,15 @@ data "aws_iam_policy_document" "developers-get-credentials-assume-role-policy" {
   }
 }
 
-resource "aws_iam_role" "developers-get-credentials" {
+resource "aws_iam_role" "developers_get_credentials" {
   description = "role for another acoount to get iam user which has read access to s3"
-  name = "${var.role-developers-get-credentials}"
+  name = "${var.role_developers_get_credentials}"
   force_detach_policies = true
-  assume_role_policy = "${data.aws_iam_policy_document.developers-get-credentials-assume-role-policy.json}"
+  assume_role_policy = "${data.aws_iam_policy_document.developers_get_credentials_assume_role_policy.json}"
 }
 
-resource "aws_iam_policy" "get-credentials-parameter-store" {
-    name        = "${var.policy-developers-get-credentials}"
+resource "aws_iam_policy" "get_credentials_parameter_store" {
+    name        = "${var.policy_developers_get_credentials}"
     description = "For getting the acces & secret keys from parameter store"
     policy = <<EOF
 {
@@ -30,15 +30,15 @@ resource "aws_iam_policy" "get-credentials-parameter-store" {
                 "ssm:GetParameters",
                 "ssm:GetParameter"
             ],
-            "Resource": "${var.resource-ssm-credentials}"
+            "Resource": "${var.resource_ssm_credentials}"
         }
     ]
 }
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "developers-get-credentials-attachment" {
-    role       = "${aws_iam_role.developers-get-credentials.name}"
-    policy_arn = "${aws_iam_policy.get-credentials-parameter-store.arn}"
+resource "aws_iam_role_policy_attachment" "developers_get_credentials_attachment" {
+    role       = "${aws_iam_role.developers_get_credentials.name}"
+    policy_arn = "${aws_iam_policy.get_credentials_parameter_store.arn}"
 }
 

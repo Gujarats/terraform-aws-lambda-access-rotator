@@ -1,23 +1,23 @@
-data "aws_iam_policy_document" "ci-writer-assume-role-policy" {
+data "aws_iam_policy_document" "ci_writer_assume_role_policy" {
   statement = {
     actions = ["sts:AssumeRole"]
     effect = "Allow" 
     principals = {
       type        = "AWS"
-      identifiers = "${var.ci-users}"
+      identifiers = "${var.ci_users}"
     }
   }
 }
 
-resource "aws_iam_role" "ci-writer" {
+resource "aws_iam_role" "ci_writer" {
   description = "role for ci to have write & read access to s3"
-  name = "${var.role-ci-writer}"
+  name = "${var.role_ci_writer}"
   force_detach_policies = true
-  assume_role_policy = "${data.aws_iam_policy_document.ci-writer-assume-role-policy.json}"
+  assume_role_policy = "${data.aws_iam_policy_document.ci_writer_assume_role_policy.json}"
 }
 
-resource "aws_iam_policy" "ci-writer-policy" {
-  name = "${var.policy-ci-s3-writer}"
+resource "aws_iam_policy" "ci_writer_policy" {
+  name = "${var.policy_ci_s3_writer}"
 
   policy = <<EOF
 {
@@ -33,8 +33,8 @@ resource "aws_iam_policy" "ci-writer-policy" {
                 "s3:ListBucket"
             ],
             "Resource": [
-                "${var.bucket-arn}",
-                "${var.bucket-arn}/*"
+                "${var.s3_bucket_arn}",
+                "${var.s3_bucket_arn}/*"
             ]
         }
     ]
@@ -42,7 +42,7 @@ resource "aws_iam_policy" "ci-writer-policy" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "ci-write-attachment" {
-    role       = "${aws_iam_role.ci-writer.name}"
-    policy_arn = "${aws_iam_policy.ci-writer-policy.arn}"
+resource "aws_iam_role_policy_attachment" "ci_write_attachment" {
+    role       = "${aws_iam_role.ci_writer.name}"
+    policy_arn = "${aws_iam_policy.ci_writer_policy.arn}"
 }

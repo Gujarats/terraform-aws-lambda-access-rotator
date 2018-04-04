@@ -1,10 +1,10 @@
 resource "aws_iam_user" "developer"{
-  name = "${var.iam-user-s3-reader}"
+  name = "${var.iam_user_s3_reader}"
   force_destroy = true
 }
 
-resource "aws_iam_user_policy" "developer-policy" {
-  name = "${var.policy-s3-reader}"
+resource "aws_iam_user_policy" "developer_policy" {
+  name = "${var.policy_s3_reader}"
   user = "${aws_iam_user.developer.name}"
 
   policy = <<EOF
@@ -20,8 +20,8 @@ resource "aws_iam_user_policy" "developer-policy" {
                 "s3:ListBucket"
             ],
             "Resource": [
-                "${var.bucket-arn}",
-                "${var.bucket-arn}/*"
+                "${var.s3_bucket_arn}",
+                "${var.s3_bucket_arn}/*"
             ]
         }
     ]
