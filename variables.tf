@@ -62,6 +62,12 @@ variable "policy-rotate-keys-name" {
     type = "string"
 }
 
-
-#imported from another module
-variable "iam-user-developer-arn" {}
+# iam-artifact-writer
+variable "role-ci-writer" {
+    description = "role name for CI"
+    type = "string"
+}
+variable "ci-accounts" {
+    description = "list of accounts to assume role-ci-writer"
+    type = "string"
+}
