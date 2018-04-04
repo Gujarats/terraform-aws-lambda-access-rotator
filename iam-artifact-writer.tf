@@ -19,7 +19,7 @@ resource "aws_iam_role" "ci-writer" {
 EOF
 }
 
-resource "aws_iam_user_policy" "ci-write-policy" {
+resource "aws_iam_policy" "ci-write-policy" {
   name = "${var.policy-ci-s3-writer}"
   user = "${aws_iam_user.developer.name}"
 
