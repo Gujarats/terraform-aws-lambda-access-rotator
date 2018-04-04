@@ -34,8 +34,7 @@ resource "aws_iam_policy" "store-credentials-policy" {
                 "ssm:DescribeParameters",
                 "ssm:GetParameter"
             ],
-            # TODO define specifc resource
-            "Resource": "*"
+            "Resource": "${var.resource-ssm-credentials}"
         }
     ]
 }
