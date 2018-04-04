@@ -1,27 +1,27 @@
 # reader
-variable "iam-user-s3-reader" {
+variable "iam_user_s3_reader" {
     description = "iam user for S3 read access "
     type = "string"
 }
-variable "policy-s3-reader" {
+variable "policy_s3_reader" {
     description = "policy name for S3 read only"
     type = "string"
 }
-variable "bucket-arn" {
+variable "s3_bucket_arn" {
     description = "bucket arn for iam user to read it"
     type = "string"
 }
 
 # role-for-get-access
-variable "role-developers-get-credentials" {
+variable "role_developers_get_credentials" {
     description = "role name for getting the S3 read access for all developers from parameter store"
     type = "string"
 }
-variable "policy-developers-get-credentials" {
+variable "policy_developers_get_credentials" {
     description = "policy name for getting the S3 read access for all developers from parameter store"
     type = "string"
 }
-variable "resource-ssm-credentials" {
+variable "resource_ssm_credentials" {
     description = "arn parameter store key that stored the access & secret keys use * for the last key eg: arn/s3/read/*"
     type = "string"
 }
@@ -35,43 +35,43 @@ variable "region" {
     description = "define which region your AWS account is"
     type = "string"
 }
-variable "lambda-function-name" {
+variable "lambda_function_name" {
     description = "lamba function name"
     type = "string"
 }
-variable "lambda-time-out" {
+variable "lambda_time_out" {
     description = "time out for lambda before lamda kill it self"
     default = "5"
 }
-variable "lambda-runtime" {
+variable "lambda_runtime" {
     description = "which language to run"
     default = "go1.x"
 }
 
 # lambda-role
-variable "lambda-role-name" {
+variable "lambda_role_name" {
     description = "lambda required role name"
     type = "string"
 }
-variable "policy-store-credentials-name" {
+variable "policy_store_credentials_name" {
     description = "policy name for storing credentials in paramter store"
     type = "string"
 }
-variable "policy-rotate-keys-name" {
+variable "policy_rotate_keys_name" {
     description = "policy name for rotating iam user credentials "
     type = "string"
 }
 
 # iam-artifact-writer
-variable "role-ci-writer" {
+variable "role_ci_writer" {
     description = "role name for CI"
     type = "string"
 }
-variable "policy-ci-s3-writer" {
+variable "policy_ci_s3_writer" {
     description = "policy name for ci to read & write S3"
     type = "string"
 }
-variable "ci-users" {
+variable "ci_users" {
     description = "list of accounts to assume role-ci-writer"
     type = "list"
 }
