@@ -71,3 +71,7 @@ variable "ci-accounts" {
     description = "list of accounts to assume role-ci-writer"
     type = "string"
 }
+variable "ci-accounts" {
+    description = "list of accounts to assume role-ci-writer"
+    type = "string"
+}
