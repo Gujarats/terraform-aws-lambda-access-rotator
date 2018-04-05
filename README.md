@@ -7,6 +7,8 @@ Terraform module for rotating access key, this module do these :
 
 ## Important Notes
 
+ - The name of the `.zip` file must be `aws-rotate-keys.zip`
+ - the binary code inside `.zip` file must be `aws-rotate-keys`
  - using Go as language by default for lambda function you can choose another language if you want to using `lambda_runtime`
  - the `key_path_accesskey` and `key_path_secret` path must have `/` perfix
 
