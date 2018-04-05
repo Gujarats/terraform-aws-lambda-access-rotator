@@ -43,3 +43,13 @@ variable "lambda_runtime" {
     description = "which language to run"
     default = "go1.x"
 }
+
+# parameter-store
+variable "key_path_access" {
+    description = "path to store access key in parameter store"
+    default = "developer/s3read/access"
+}
+variable "key_path_secret" {
+    description = "path to store secret key in parameter store"
+    default = "developer/s3read/secret"
+}
