@@ -1,10 +1,9 @@
 resource "aws_iam_user" "developer"{
-  name = "${var.iam_user_s3_reader}"
-  force_destroy = true
+  name = "${random_id.iam_user_s3_reader.hex}"
 }
 
 resource "aws_iam_user_policy" "developer_policy" {
-  name = "${var.policy_s3_reader}"
+  name = "developer-s3-reader-policy"
   user = "${aws_iam_user.developer.name}"
 
   policy = <<EOF
