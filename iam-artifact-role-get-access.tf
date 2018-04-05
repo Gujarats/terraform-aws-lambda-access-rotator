@@ -20,7 +20,10 @@ data "aws_iam_policy_document" "get_credentials_parameter_store_policy" {
   statement {
     actions = ["ssm:GetParameter"]
     effect = "Allow" 
-    resources = ["*"]
+    resources = [
+        "${aws_ssm_parameter.path_access.arn}",
+        "${aws_ssm_parameter.path_secret.arn}",
+    ]
   }
 }
 

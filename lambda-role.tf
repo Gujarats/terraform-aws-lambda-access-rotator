@@ -26,10 +26,10 @@ data "aws_iam_policy_document" "store_credentials" {
         "ssm:GetParameter"
     ]
     effect = "Allow" 
-    resources = ["*"]
-    #resources = [
-    #    "${var.resource_ssm_credentials}"
-    #]
+    resources = [
+      "${aws_ssm_parameter.path_access.arn}",
+      "${aws_ssm_parameter.path_secret.arn}",
+    ]
   }
 }
 resource "aws_iam_role_policy" "store_credentials_policy" {
@@ -48,10 +48,10 @@ data "aws_iam_policy_document" "rotate_keys" {
         "iam:UpdateAccessKey"
     ]
     effect = "Allow" 
-    resources = ["*"]
-    #resources = [
-    #    "${aws_iam_user.developer.arn}"
-    #]
+    resources = [
+       "${aws_ssm_parameter.path_access.arn}",
+       "${aws_ssm_parameter.path_secret.arn}",
+    ]
   }
 }
 resource "aws_iam_role_policy" "rotate_keys_policy" {
