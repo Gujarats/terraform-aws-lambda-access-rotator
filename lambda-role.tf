@@ -1,6 +1,6 @@
 resource "aws_iam_role" "lambda_role" {
   description = "role for lambda function to ratoate access & secret keys"
-  name = "${var.lambda_role_name}"
+  name = "${random_id.role_name_lambda.hex}"
   force_detach_policies = true
   assume_role_policy = <<EOF
 {
@@ -18,58 +18,44 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 
-# Policy 
-resource "aws_iam_policy" "store_credentials_policy" {
-    name        = "${var.policy_store_credentials_name}"
-    description = "For storing the acces & secret keys to parameter store"
-    policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "StoreCredentials",
-            "Effect": "Allow",
-            "Action": [
-                "ssm:PutParameter",
-                "ssm:DescribeParameters",
-                "ssm:GetParameter"
-            ],
-            "Resource": "${var.resource_ssm_credentials}"
-        }
+data "aws_iam_policy_document" "store_credentials" {
+  statement {
+    actions = [
+        "ssm:PutParameter",
+        "ssm:DescribeParameters",
+        "ssm:GetParameter"
     ]
+    effect = "Allow" 
+    resources = ["*"]
+    #resources = [
+    #    "${var.resource_ssm_credentials}"
+    #]
+  }
 }
-EOF
-}
-resource "aws_iam_role_policy_attachment" "role_lambda_attachment1" {
-    role       = "${aws_iam_role.lambda_role.name}"
-    policy_arn = "${aws_iam_policy.store_credentials_policy.arn}"
+resource "aws_iam_role_policy" "store_credentials_policy" {
+  name = "${var.product_domain}StoreCredentialsPolicy"
+  role = "${aws_iam_role.lambda_role.id}"
+  policy = "${data.aws_iam_policy_document.store_credentials.json}"
 }
 
-# Policy 
-resource "aws_iam_policy" "rotate_keys_policy" {
-    name        = "${var.policy_rotate_keys_name}"
-    description = "For rotating the acces & secret keys to specific iam_user"
-    policy = <<EOF
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Sid": "RotateKeysForALlIAMusers",
-            "Effect": "Allow",
-            "Action": [
-                "iam:ListAccessKeys",
-                "iam:GetAccessKeyLastUsed",
-                "iam:DeleteAccessKey",
-                "iam:CreateAccessKey",
-                "iam:UpdateAccessKey"
-            ],
-            "Resource": "${aws_iam_user.developer.arn}"
-        }
+data "aws_iam_policy_document" "rotate_keys" {
+  statement {
+    actions = [
+        "iam:ListAccessKeys",
+        "iam:GetAccessKeyLastUsed",
+        "iam:DeleteAccessKey",
+        "iam:CreateAccessKey",
+        "iam:UpdateAccessKey"
     ]
+    effect = "Allow" 
+    resources = ["*"]
+    #resources = [
+    #    "${aws_iam_user.developer.arn}"
+    #]
+  }
 }
-EOF
-}
-resource "aws_iam_role_policy_attachment" "role_lambda_attachment2" {
-    role       = "${aws_iam_role.lambda_role.name}"
-    policy_arn = "${aws_iam_policy.rotate_keys_policy.arn}"
+resource "aws_iam_role_policy" "rotate_keys_policy" {
+  name = "${var.product_domain}RotateKeysPolicy"
+  role = "${aws_iam_role.lambda_role.id}"
+  policy = "${data.aws_iam_policy_document.rotate_keys.json}"
 }
