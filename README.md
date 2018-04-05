@@ -5,9 +5,26 @@ Terraform module for rotating access key, this module do these :
 2. IAM Role that have read access to parameter store for getting the access & secret keys
 3. IAM user for all developers that has the S3 read only access
 
+## Important Notes
+
+ - using Go as language by default for lambda function you can choose another language if you want to using `lambda_runtime`
+ - the `key_path_accesskey` and `key_path_secret` path must have `/` perfix
+
+## Required resource
+
+ - You must create your S3 resource in order to get bucket arn
+ - You must create writer resource for S3 bucket
+
+The reason why separate the `S3` and `writer` from this module because if we want to make changes to this module or this module crash at runtime we can change it wihtout destroying the `S3` and `writer`
+
 ## example
 
 ```hcl
+
+# S3 resource here
+
+# writer resource here
+
 module "aws_lambda_access_rotator" {
     source = "github.com/traveloka/terraform-aws-lambda-access-rotator"
 
@@ -23,7 +40,6 @@ module "aws_lambda_access_rotator" {
 
 
     # role get access to get credentials from parameter store
-    resource_ssm_credentials = "arn:aws:ssm:ap_southeast_1:170466898939:parameter/bei/developers/s3read/*"
     accounts = [
         "arn:aws:iam::account1234:root",
         "arn:aws:iam::acount5678:root"
@@ -32,7 +48,8 @@ module "aws_lambda_access_rotator" {
     # lambda
     lambda_time_out = "5"
 
-    #parameter-store
+    # parameter-store
+    # the key path must have "/" perfix
     key_path_access = "/develoepr/s3/read/access" 
     key_path_secret = "/develoepr/s3/read/secret" 
 }
