@@ -25,10 +25,6 @@ variable "s3_bucket_arn" {
 }
 
 # iam-artifact-role-for-get-access
-variable "resource_ssm_credentials" {
-    description = "arn parameter store key that stored the access & secret keys use * for the last key eg: arn/s3/read/*"
-    type = "string"
-}
 variable "accounts" {
     description = "List of accounts that are granted to assume the role."
     type        = "list"
