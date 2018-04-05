@@ -61,17 +61,3 @@ variable "policy_rotate_keys_name" {
     description = "policy name for rotating iam user credentials "
     type = "string"
 }
-
-# iam-artifact-writer
-variable "role_ci_writer" {
-    description = "role name for CI"
-    type = "string"
-}
-variable "policy_ci_s3_writer" {
-    description = "policy name for ci to read & write S3"
-    type = "string"
-}
-variable "ci_users" {
-    description = "list of accounts to assume role-ci-writer"
-    type = "list"
-}
