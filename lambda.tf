@@ -12,7 +12,6 @@ resource "aws_lambda_function" "lambda_function_rotate_keys" {
       PREFIX_ENV_MINE = "MY_APP"
         
       #Prefix must be the same with above
-      #TODO get iam user s3 reader
       MY_APP_USER = "${aws_iam_user.developer.name}"
       MY_APP_REGION = "${var.region}"
     }
