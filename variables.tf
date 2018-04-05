@@ -4,15 +4,15 @@ variable "product_domain" {
     default = ""    
     type = "string"
 }
-variable "aws_service" {
-    description = "name of your aws service in this case lambda.amazonaws.com"
-    type = "string"
-}
-variable "role_identifier" {
-    description = "name of your aws service in this case lambda.amazonaws.com"
-    default = "Keys Rotator"
-    type = "string"
-}
+#variable "aws_service" {
+#    description = "name of your aws service in this case lambda.amazonaws.com"
+#    type = "string"
+#}
+#variable "role_identifier" {
+#    description = "name of your aws service in this case lambda.amazonaws.com"
+#    default = "Keys Rotator"
+#    type = "string"
+#}
 variable "region" {
     description = "define which region your AWS account is"
     type = "string"
