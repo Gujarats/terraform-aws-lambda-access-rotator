@@ -7,14 +7,14 @@ Terraform module for rotating access key, this module do these :
 
 ## Important Notes
 
- - The name of the `.zip` file must be `aws-rotate-keys.zip`
- - the binary code inside `.zip` file must be `aws-rotate-keys`
+ - You must provide `.zip` which contains the ready execute file for lambda to execute, the name of the  file must be `aws-rotate-keys.zip`
+ - the file inside `.zip` file must be `aws-rotate-keys` which contains your code / compiled code binary 
  - using Go as language by default for lambda function you can choose another language if you want to using `lambda_runtime`
  - the `key_path_accesskey` and `key_path_secret` path must have `/` perfix
 
 ## Required resource
 
- - You must create your S3 resource in order to get bucket arn
+ - You must create your own S3 bucket in order to get bucket arn
  - You must create writer resource for S3 bucket
 
 The reason why separate the `S3` and `writer` from this module because if we want to make changes to this module or this module crash at runtime we can change it wihtout destroying the `S3` and `writer`
