@@ -24,16 +24,18 @@ The reason why separate the `S3` and `writer` from this module because if we wan
 ```hcl
 
 # S3 resource here
-
-# writer resource here
+resource "aws_s3_bucket" "single_bucket" {
+    bucket = "YOUR-BUCKET-NAME"
+    versioning {
+        enabled = true
+    }
+}
 
 module "aws_lambda_access_rotator" {
     source = "github.com/traveloka/terraform-aws-lambda-access-rotator"
 
     #public variable
-    product_domain = "bei"
-    aws_service = "lambda.amazonaws.com"
-    role_identifier ="Keys Rotator"
+    product_domain = "YOUR-DOMAIN-NAME"
     region = "ap-southeast-1"
     
     # iam user
@@ -41,7 +43,7 @@ module "aws_lambda_access_rotator" {
     s3_bucket_arn ="aws_s3_bucket.single_bucket.arn"
 
 
-    # role get access to get credentials from parameter store
+    # provide another aws account to get credentials from parameter store
     accounts = [
         "arn:aws:iam::account1234:root",
         "arn:aws:iam::acount5678:root"
