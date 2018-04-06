@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_role" {
-  description = "role for lambda function to ratoate access & secret keys"
+  description = "role for lambda function to rotate access & secret keys"
   name = "${random_id.lambda_role_name.hex}"
   force_detach_policies = true
   assume_role_policy = <<EOF
