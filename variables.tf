@@ -4,10 +4,6 @@ variable "product_domain" {
     default = ""    
     type = "string"
 }
-variable "region" {
-    description = "define which region your AWS account is"
-    type = "string"
-}
 
 # reader
 variable "s3_bucket_arn" {

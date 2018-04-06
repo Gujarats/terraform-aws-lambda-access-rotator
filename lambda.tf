@@ -1,3 +1,6 @@
+
+data "aws_region" "current" {}
+
 resource "aws_lambda_function" "lambda_function_rotate_keys" {
   description = "roate the access & secret keys IAM user"
   filename         = "aws-rotate-keys.zip"
@@ -13,7 +16,7 @@ resource "aws_lambda_function" "lambda_function_rotate_keys" {
         
       #Prefix must be the same with above
       MY_APP_USER = "${aws_iam_user.developer.name}"
-      MY_APP_REGION = "${var.region}"
+      MY_APP_REGION = "${data.aws_region.current.name}"
     }
   }
 }

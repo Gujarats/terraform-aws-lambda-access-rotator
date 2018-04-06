@@ -12,7 +12,7 @@ Terraform module for rotating access key, this module do these :
  - using Go as language by default for lambda function you can choose another language if you want to using `lambda_runtime`
  - the `key_path_accesskey` and `key_path_secret` path must have `/` perfix
 
-## Required resource
+## Required resources
 
  - You must provide one or more aws accounts so that the user in those accounts can get the access & secret keys stored in parameter store
  - You must create your own S3 bucket in order to get bucket arn
@@ -34,12 +34,10 @@ module "aws_lambda_access_rotator" {
 
     #public variable
     product_domain = "YOUR-DOMAIN-NAME"
-    region = "ap-southeast-1"
     
     # iam user
     # assuming there are already S3 resource define before this
     s3_bucket_arn ="aws_s3_bucket.single_bucket.arn"
-
 
     # provide another aws account to get credentials from parameter store
     accounts = [
