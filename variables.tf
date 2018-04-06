@@ -40,3 +40,10 @@ variable "key_path_secret" {
     type = "string"
     default = "developer/s3read/secret"
 }
+
+# cloud-watch-event
+variable "cloud-watch-cron" {
+    description = "10 pm UTC rotate the keys , that would be 5 am in gtm +7"
+    default = "cron(0 22 * * ? *)"
+    type = "string"
+}
