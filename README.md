@@ -1,7 +1,7 @@
 # Lambda Access rotator 
 
 Terraform module for rotating access key, this module do these : 
-1. Create Lambda function which responsible for ratoting the access & secret keys and store it to parameter store
+1. Create Lambda function which responsible for rotating the access & secret keys and store it to parameter store
 2. IAM Role that have read access to parameter store for getting the access & secret keys
 3. IAM user for all developers that has the S3 read only access
 
