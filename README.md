@@ -14,10 +14,8 @@ Terraform module for rotating access key, this module do these :
 
 ## Required resource
 
+ - You must provide one or more aws accounts so that the user in those accounts can get the access & secret keys stored in parameter store
  - You must create your own S3 bucket in order to get bucket arn
- - You must create writer resource for S3 bucket
-
-The reason why separate the `S3` and `writer` from this module because if we want to make changes to this module or this module crash at runtime we can change it wihtout destroying the `S3` and `writer`
 
 ## example
 
